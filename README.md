@@ -939,3 +939,988 @@
 </body>
 </html># Python-H1-
 Python repository in The repository we have A lot of project we build and work on this.
+Database
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vedic Math Magic Realm 🌟 Realtime Firebase Learning Adventure</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka & Comic Neue for friendly child-oriented typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            font-family: 'Fredoka', cursive, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FFF9E6 0%, #E6F7FF 50%, #F3E8FF 100%);
+            min-height: 100vh;
+        }
+
+        /* Tactile bounce and glowing keyframe animations */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        .animate-pop {
+            animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Button pushable depth */
+        .btn-bounce {
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 0 rgba(0,0,0,0.12);
+        }
+        .btn-bounce:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 rgba(0,0,0,0.12);
+        }
+        .btn-bounce:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFE8AC;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF8A00;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 pb-12 flex flex-col min-h-screen">
+
+    <!-- NAVIGATION HEADER & USER HUD -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-4 border-amber-300 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-3">
+            
+            <!-- Logo Branding -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('tricks')">
+                <div class="w-12 h-12 bg-gradient-to-tr from-amber-400 to-orange-400 rounded-full flex items-center justify-center text-white text-2xl shadow-lg animate-float">
+                    🐘
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-black text-orange-600 leading-none">Vedic<span class="text-amber-500">Realm!</span></h1>
+                    <p class="text-xs font-semibold text-slate-500">Mental Math Magic with Firebase Cloud Savings ☁️</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="flex items-center space-x-1.5 md:space-x-3">
+                <button onclick="switchTab('tricks')" id="nav-tricks" class="px-3 md:px-4 py-2 rounded-2xl font-bold text-xs md:text-sm flex items-center gap-1.5 bg-amber-400 text-slate-900 shadow-md btn-bounce">
+                    <i class="fa-solid fa-wand-magic-sparkles text-orange-700"></i> Tricks
+                </button>
+                <button onclick="switchTab('quiz')" id="nav-quiz" class="px-3 md:px-4 py-2 rounded-2xl font-bold text-xs md:text-sm flex items-center gap-1.5 bg-white text-slate-700 hover:bg-amber-100 btn-bounce">
+                    <i class="fa-solid fa-gamepad text-purple-600"></i> Quiz Arena
+                </button>
+                <button onclick="switchTab('leaderboard')" id="nav-leaderboard" class="px-3 md:px-4 py-2 rounded-2xl font-bold text-xs md:text-sm flex items-center gap-1.5 bg-white text-slate-700 hover:bg-amber-100 btn-bounce">
+                    <i class="fa-solid fa-trophy text-yellow-500"></i> Leaderboard
+                </button>
+                <button onclick="switchTab('notes')" id="nav-notes" class="px-3 md:px-4 py-2 rounded-2xl font-bold text-xs md:text-sm flex items-center gap-1.5 bg-white text-slate-700 hover:bg-amber-100 btn-bounce">
+                    <i class="fa-solid fa-bookmark text-emerald-600"></i> My Notes
+                </button>
+            </nav>
+
+            <!-- User Auth HUD & Star counter -->
+            <div class="flex items-center gap-3">
+                <!-- Stars HUD -->
+                <div class="flex items-center gap-1.5 bg-amber-100 border-2 border-amber-400 px-3 py-1 rounded-full shadow-inner" title="Total Stars Saved to Firestore Database">
+                    <i class="fa-solid fa-star text-amber-500 text-lg"></i>
+                    <span id="user-stars-display" class="font-black text-lg text-amber-700">0</span>
+                </div>
+
+                <!-- User Profile / Auth Button -->
+                <div id="auth-status-container" class="flex items-center gap-2">
+                    <!-- Dynamic auth state rendered via JS -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTENT -->
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- USER WELCOME BANNER -->
+        <div class="bg-gradient-to-r from-orange-400 via-amber-300 to-yellow-300 rounded-3xl p-5 md:p-6 mb-8 border-4 border-white shadow-xl flex flex-col md:flex-row items-center gap-4">
+            <div class="text-6xl bg-white p-3 rounded-full shadow-md animate-bounce">
+                🧙‍♂️
+            </div>
+            <div class="flex-grow text-center md:text-left">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900">
+                    Welcome, <span id="banner-user-name" class="text-orange-900 underline decoration-wavy">Young Wizard</span>! ✨
+                </h2>
+                <p id="banner-auth-info" class="text-slate-800 text-sm font-medium mt-1">
+                    Your progress, stars, and saved notes are synchronized to the Cloud Firestore database!
+                </p>
+            </div>
+            <div class="flex items-center gap-3 bg-white/80 backdrop-blur-sm p-3 rounded-2xl border border-white text-center shadow-inner">
+                <div>
+                    <span id="user-level-badge" class="text-xl font-black text-purple-700 block">Level 1</span>
+                    <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Math Rank</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 1: TRICKS & LIVE SOLVER ================= -->
+        <section id="tab-tricks" class="space-y-8">
+            <!-- TRICKS GRID -->
+            <div>
+                <h3 class="text-2xl font-black text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i> Select a Vedic Shortcut:
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="tricks-selector-grid">
+                    <!-- Cards rendered via JS -->
+                </div>
+            </div>
+
+            <!-- INTERACTIVE SOLVER / VISUALIZER -->
+            <div class="bg-white rounded-3xl border-4 border-amber-300 shadow-2xl p-6 md:p-8 animate-pop">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-dashed border-amber-200 pb-4 mb-6">
+                    <div>
+                        <span id="active-sutra-name" class="bg-amber-100 text-amber-800 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+                            Sutra: Ekadhikena Purvena
+                        </span>
+                        <h3 id="active-trick-title" class="text-2xl md:text-3xl font-black text-orange-600 mt-1">
+                            Multiply Any 2-Digit Number by 11
+                        </h3>
+                        <p id="active-trick-desc" class="text-slate-600 font-medium text-sm">
+                            Pull the digits apart and place their sum right in the middle!
+                        </p>
+                    </div>
+
+                    <!-- Custom Number Input Sandbox -->
+                    <div class="bg-amber-50 p-3 rounded-2xl border-2 border-amber-300 flex items-center gap-2">
+                        <label for="custom-math-input" class="text-xs font-black text-amber-900 uppercase">Test Number:</label>
+                        <input type="text" id="custom-math-input" class="w-24 text-center font-black text-xl py-1.5 px-2 rounded-xl border-2 border-amber-400 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500" value="45">
+                        <button onclick="calculateCustomInput()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-2 rounded-xl btn-bounce text-xs">
+                            Solve! ✨
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visual Step-by-Step Output -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <div class="lg:col-span-8 bg-slate-50 rounded-2xl p-6 border-2 border-slate-200 min-h-[300px] flex flex-col justify-between space-y-4" id="visualizer-steps-box">
+                        <!-- Dynamic step cards load here -->
+                    </div>
+
+                    <!-- Save Note & Practice Actions -->
+                    <div class="lg:col-span-4 bg-gradient-to-b from-amber-50 to-orange-100 rounded-2xl p-5 border-2 border-amber-300 flex flex-col justify-between h-full space-y-4 text-center">
+                        <div class="text-5xl animate-bounce">
+                            💡
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-amber-900 text-base mb-1">Save to Cloud Notes?</h4>
+                            <p class="text-xs text-slate-600">Bookmark this technique into your Cloud Firestore database notebook to read later!</p>
+                        </div>
+                        <button onclick="saveCurrentTrickAsNote()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-3 px-4 rounded-xl shadow-md btn-bounce text-xs flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Save Note to Database
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: QUIZ ARENA ================= -->
+        <section id="tab-quiz" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl border-4 border-purple-300 shadow-2xl p-6 md:p-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b-2 border-purple-100 pb-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-black text-purple-700 flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-amber-400"></i> Vedic Speed Arena
+                        </h2>
+                        <p class="text-slate-600 text-xs md:text-sm">Answer correctly to earn +10 stars saved automatically to your profile!</p>
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-purple-50 p-2.5 rounded-2xl border border-purple-200">
+                        <span class="text-xs font-bold text-slate-700">Timer Mode:</span>
+                        <button id="timer-toggle-btn" onclick="toggleQuizTimer()" class="bg-purple-200 text-purple-800 text-xs font-bold px-3 py-1 rounded-full btn-bounce">
+                            OFF ☕ (Relaxed)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Main Play Container -->
+                <div id="quiz-main-view" class="max-w-2xl mx-auto text-center space-y-6 py-2">
+                    <div class="flex items-center justify-between text-xs md:text-sm font-bold text-slate-600">
+                        <span>Question <span id="quiz-q-num" class="text-purple-700 text-base font-black">1</span> / 5</span>
+                        <span id="quiz-timer-counter" class="hidden text-red-500 font-black text-base">⏱️ 15s</span>
+                        <span class="text-amber-600 font-extrabold">Score: <span id="quiz-score-val" class="text-lg">0</span></span>
+                    </div>
+
+                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                        <div id="quiz-progress-fill" class="bg-purple-500 h-full w-1/5 transition-all duration-300"></div>
+                    </div>
+
+                    <div class="bg-gradient-to-b from-purple-50 to-indigo-50 border-4 border-purple-200 rounded-3xl p-6 md:p-8 shadow-inner">
+                        <span id="quiz-hint-tag" class="bg-purple-200 text-purple-900 text-xs font-black px-3 py-1 rounded-full uppercase">
+                            Trick: Multiply by 11
+                        </span>
+                        <h3 id="quiz-q-text" class="text-3xl md:text-5xl font-black text-slate-800 my-6">
+                            45 × 11 = ?
+                        </h3>
+
+                        <div id="quiz-answers-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                            <!-- Answer option buttons -->
+                        </div>
+                    </div>
+
+                    <div id="quiz-feedback-box" class="hidden p-4 rounded-2xl font-extrabold text-base animate-pop"></div>
+
+                    <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden w-full bg-amber-500 hover:bg-amber-600 text-white font-black text-lg py-3.5 rounded-2xl shadow-lg btn-bounce">
+                        Next Question 🚀
+                    </button>
+                </div>
+
+                <!-- Quiz Results Overlay -->
+                <div id="quiz-results-view" class="hidden text-center py-6 space-y-6 animate-pop">
+                    <div class="text-6xl">🏆</div>
+                    <h3 class="text-3xl font-black text-purple-800">Quiz Completed!</h3>
+                    <p class="text-slate-600 text-sm">Your score and earned stars have been persisted to the Cloud Firestore database!</p>
+
+                    <div class="flex justify-center items-center gap-4 my-2">
+                        <div class="bg-amber-100 p-4 rounded-2xl border-2 border-amber-300 min-w-[120px]">
+                            <span class="text-[10px] text-amber-800 uppercase font-black block">Stars Earned</span>
+                            <span id="res-stars-val" class="text-2xl font-black text-amber-600">+0 ⭐</span>
+                        </div>
+                        <div class="bg-purple-100 p-4 rounded-2xl border-2 border-purple-300 min-w-[120px]">
+                            <span class="text-[10px] text-purple-800 uppercase font-black block">Accuracy</span>
+                            <span id="res-accuracy-val" class="text-2xl font-black text-purple-600">0%</span>
+                        </div>
+                    </div>
+
+                    <button onclick="resetQuiz()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-base px-8 py-3.5 rounded-2xl shadow-lg btn-bounce">
+                        Play Again! 🔄
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: LEADERBOARD ================= -->
+        <section id="tab-leaderboard" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl border-4 border-yellow-300 shadow-2xl p-6 md:p-8">
+                <div class="flex items-center justify-between border-b-2 border-yellow-100 pb-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-black text-amber-600 flex items-center gap-2">
+                            <i class="fa-solid fa-trophy text-yellow-500"></i> Top Math Magicians (Realtime Leaderboard)
+                        </h2>
+                        <p class="text-slate-600 text-xs md:text-sm">Live scores retrieved from Cloud Firestore Database!</p>
+                    </div>
+                </div>
+
+                <!-- Leaderboard Table Container -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-amber-100 text-amber-900 text-xs font-black uppercase border-b-2 border-amber-200">
+                                <th class="p-3 rounded-l-xl">Rank</th>
+                                <th class="p-3">Wizard Name</th>
+                                <th class="p-3">Total Stars</th>
+                                <th class="p-3 rounded-r-xl">Quiz High Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-tbody" class="text-sm font-bold divide-y divide-slate-100">
+                            <!-- Realtime Firestore leaderboard rows load here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: FIRESTORE SAVED NOTES ================= -->
+        <section id="tab-notes" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl border-4 border-emerald-300 shadow-2xl p-6 md:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-emerald-100 pb-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-black text-emerald-700 flex items-center gap-2">
+                            <i class="fa-solid fa-book-bookmark text-emerald-500"></i> My Cloud Notes Notebook
+                        </h2>
+                        <p class="text-slate-600 text-xs md:text-sm">Tricks & custom notes stored safely in `/artifacts/{appId}/users/{userId}/notes`</p>
+                    </div>
+
+                    <!-- Manual Note Creator Modal trigger -->
+                    <button onclick="openCustomNoteModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs px-4 py-2.5 rounded-xl btn-bounce flex items-center gap-1.5 self-start sm:self-auto">
+                        <i class="fa-solid fa-plus"></i> Write Custom Note
+                    </button>
+                </div>
+
+                <!-- Notes Cards Grid -->
+                <div id="notes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Dynamic notes load here -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CUSTOM NOTE MODAL -->
+    <div id="note-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl border-4 border-emerald-400 p-6 max-w-md w-full space-y-4 shadow-2xl animate-pop">
+            <div class="flex items-center justify-between">
+                <h3 class="text-xl font-black text-emerald-800">New Vedic Math Note 📝</h3>
+                <button onclick="closeCustomNoteModal()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
+            </div>
+            <div>
+                <label class="text-xs font-bold text-slate-600 uppercase block mb-1">Title / Technique:</label>
+                <input type="text" id="modal-note-title" class="w-full p-2.5 border-2 border-slate-200 rounded-xl font-bold focus:outline-none focus:border-emerald-500 text-sm" placeholder="e.g. My Favorite 11s Trick">
+            </div>
+            <div>
+                <label class="text-xs font-bold text-slate-600 uppercase block mb-1">Note Details / Example:</label>
+                <textarea id="modal-note-body" rows="3" class="w-full p-2.5 border-2 border-slate-200 rounded-xl font-bold focus:outline-none focus:border-emerald-500 text-sm" placeholder="Write down your steps or observations..."></textarea>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeCustomNoteModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">Cancel</button>
+                <button onclick="submitCustomNote()" class="px-5 py-2 rounded-xl text-xs font-black bg-emerald-500 hover:bg-emerald-600 text-white btn-bounce">Save Note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE MODULE SCRIPTS & APPLICATION LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInAnonymously, 
+            signInWithCustomToken, 
+            onAuthStateChanged,
+            GoogleAuthProvider,
+            signInWithPopup,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            getDoc, 
+            setDoc, 
+            updateDoc, 
+            collection, 
+            onSnapshot, 
+            addDoc, 
+            deleteDoc,
+            query
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase Environment Config
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'vedic-math-app';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "dummy-key",
+            authDomain: "dummy.firebaseapp.com",
+            projectId: "dummy-project"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Application Global State
+        window.appState = {
+            currentUser: null,
+            userProfile: {
+                displayName: "Guest Explorer",
+                stars: 0,
+                highScore: 0,
+                avatar: "🐘"
+            },
+            selectedTrickId: 0,
+            activeTab: 'tricks',
+            quizIndex: 0,
+            quizScore: 0,
+            timerEnabled: false,
+            timeLeft: 15,
+            timerInterval: null,
+            savedNotes: [],
+            leaderboardData: []
+        };
+
+        /* ================= MANDATORY RULE 1, 2, 3: AUTHENTICATION ================= */
+        async function initAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.warn("Auth initial attempt fallback:", err);
+                try {
+                    await signInAnonymously(auth);
+                } catch(e) {
+                    console.error("Anonymous auth failed", e);
+                }
+            }
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            window.appState.currentUser = user;
+            renderAuthHUD(user);
+
+            if (user) {
+                // Initialize/Listen to User Document
+                setupUserFirestoreListeners(user.uid);
+                // Listen to Global Leaderboard
+                setupLeaderboardListener();
+                // Listen to Saved Notes
+                setupNotesListener(user.uid);
+            }
+        });
+
+        function renderAuthHUD(user) {
+            const container = document.getElementById('auth-status-container');
+            const nameBanner = document.getElementById('banner-user-name');
+
+            if (user) {
+                const name = user.displayName || (user.isAnonymous ? `Guest Wizard (${user.uid.substring(0, 4)})` : "Math Wizard");
+                nameBanner.innerText = name;
+
+                container.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-black text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-300 hidden sm:inline">
+                            ${user.isAnonymous ? '👤 Guest' : '⭐ Google User'}
+                        </span>
+                        <button onclick="handleGoogleSignIn()" class="bg-blue-500 hover:bg-blue-600 text-white font-black text-xs px-3 py-1.5 rounded-xl btn-bounce ${user.isAnonymous ? '' : 'hidden'}">
+                            Google Login
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        window.handleGoogleSignIn = async function() {
+            try {
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+            } catch (e) {
+                console.error("Google sign in error", e);
+            }
+        };
+
+        /* ================= FIRESTORE DATABASE LISTENERS ================= */
+        // RULE 1: Private Path: /artifacts/{appId}/users/{userId}/profile/data
+        // RULE 1: Public Leaderboard Path: /artifacts/{appId}/public/data/leaderboard
+        function setupUserFirestoreListeners(userId) {
+            if (!userId) return;
+
+            const userDocRef = doc(db, 'artifacts', appId, 'users', userId, 'profile', 'user_data');
+
+            // RULE 2: Simple snapshot, no complex index queries
+            onSnapshot(userDocRef, (snap) => {
+                if (snap.exists()) {
+                    const data = snap.data();
+                    window.appState.userProfile = data;
+                    document.getElementById('user-stars-display').innerText = data.stars || 0;
+                    
+                    // Level calculation
+                    const lvl = Math.floor((data.stars || 0) / 30) + 1;
+                    document.getElementById('user-level-badge').innerText = `Level ${lvl}`;
+                } else {
+                    // Create default user profile in Firestore
+                    const defaultProfile = {
+                        displayName: auth.currentUser?.displayName || "Young Wizard",
+                        stars: 0,
+                        highScore: 0,
+                        uid: userId
+                    };
+                    setDoc(userDocRef, defaultProfile);
+                }
+            }, (error) => {
+                console.error("User profile snapshot error:", error);
+            });
+        }
+
+        function setupLeaderboardListener() {
+            // RULE 1: /artifacts/{appId}/public/data/leaderboard
+            const lbCol = collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');
+
+            onSnapshot(lbCol, (snapshot) => {
+                const list = [];
+                snapshot.forEach(docSnap => {
+                    list.push({ id: docSnap.id, ...docSnap.data() });
+                });
+
+                // Sort in memory (Rule 2)
+                list.sort((a, b) => (b.stars || 0) - (a.stars || 0));
+                window.appState.leaderboardData = list;
+                renderLeaderboard();
+            }, (err) => {
+                console.error("Leaderboard error:", err);
+            });
+        }
+
+        function setupNotesListener(userId) {
+            // RULE 1: /artifacts/{appId}/users/{userId}/notes
+            const notesCol = collection(db, 'artifacts', appId, 'users', userId, 'notes');
+
+            onSnapshot(notesCol, (snapshot) => {
+                const notes = [];
+                snapshot.forEach(docSnap => {
+                    notes.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                window.appState.savedNotes = notes;
+                renderSavedNotes();
+            }, (err) => {
+                console.error("Notes snapshot error:", err);
+            });
+        }
+
+        /* ================= VEDIC MATH TRICKS ENGINE & SOLVER ================= */
+        const tricksDatabase = [
+            {
+                id: 0,
+                title: "Multiply Any 2-Digit Number by 11",
+                sutra: "Sandhi & Antyayordashake",
+                desc: "Split the two digits and put their sum right in the center!",
+                defaultVal: "45",
+                icon: "fa-bolt",
+                calc: (val) => {
+                    let num = parseInt(val) || 45;
+                    if (num < 10 || num > 99) num = 45;
+                    const d1 = Math.floor(num / 10);
+                    const d2 = num % 10;
+                    const sum = d1 + d2;
+                    const finalAns = num * 11;
+
+                    return [
+                        { step: "Step 1: Pull Digits Apart", detail: `Digit 1 = <span class="text-orange-600 font-extrabold text-lg">${d1}</span> , Digit 2 = <span class="text-emerald-600 font-extrabold text-lg">${d2}</span>` },
+                        { step: "Step 2: Add Digits Together", detail: `${d1} + ${d2} = <span class="text-purple-600 font-black text-xl">${sum}</span>` },
+                        { step: "Step 3: Drop Sum in Middle!", detail: `${d1} _ ${d2} ➔ ${d1} [<span class="text-purple-600">${sum}</span>] ${d2}` },
+                        { step: "Final Result!", detail: `<span class="text-purple-700 font-black text-3xl">${num} × 11 = ${finalAns}</span>` }
+                    ];
+                }
+            },
+            {
+                id: 1,
+                title: "Squaring Numbers Ending in 5",
+                sutra: "Ekadhikena Purvena",
+                desc: "Multiply tens digit by (tens + 1), then write 25 at the end!",
+                defaultVal: "35",
+                icon: "fa-superscript",
+                calc: (val) => {
+                    let num = parseInt(val) || 35;
+                    if (num % 10 !== 5) num = 35;
+                    const tens = Math.floor(num / 10);
+                    const next = tens + 1;
+                    const prod = tens * next;
+                    const finalAns = num * num;
+
+                    return [
+                        { step: "Step 1: Identify Tens Digit", detail: `First digit: <span class="text-orange-600 font-black text-xl">${tens}</span>` },
+                        { step: "Step 2: Multiply by Next Integer", detail: `${tens} × (${tens} + 1) = ${tens} × ${next} = <span class="text-orange-600 font-black text-2xl">${prod}</span>` },
+                        { step: "Step 3: Append 25 at the End!", detail: `5² = <span class="text-emerald-600 font-black text-2xl">25</span>` },
+                        { step: "Final Magic Result!", detail: `<span class="text-orange-600 font-black text-3xl">${prod}</span><span class="text-emerald-600 font-black text-3xl">25</span> = <span class="text-purple-700 font-black text-3xl">${finalAns}</span>` }
+                    ];
+                }
+            },
+            {
+                id: 2,
+                title: "Nikhilam Subtraction (Base 100/1000)",
+                sutra: "Nikhilam Navatashcaramam Dashatah",
+                desc: "Subtract all digits from 9, and the last digit from 10!",
+                defaultVal: "346",
+                icon: "fa-minus",
+                calc: (val) => {
+                    let num = parseInt(val) || 346;
+                    if (num < 1 || num > 999) num = 346;
+                    const str = num.toString().padStart(3, '0');
+                    const d1 = parseInt(str[0]), d2 = parseInt(str[1]), d3 = parseInt(str[2]);
+                    const r1 = 9 - d1, r2 = 9 - d2, r3 = 10 - d3;
+                    const finalAns = 1000 - num;
+
+                    return [
+                        { step: "Step 1: Problem Target", detail: `<span class="font-extrabold text-slate-800">1000 - ${num}</span>` },
+                        { step: "Step 2: Subtract first two digits from 9", detail: `9 - ${d1} = <span class="text-emerald-600 font-black">${r1}</span> | 9 - ${d2} = <span class="text-emerald-600 font-black">${r2}</span>` },
+                        { step: "Step 3: Subtract final digit from 10", detail: `10 - ${d3} = <span class="text-amber-600 font-black text-xl">${r3}</span>` },
+                        { step: "Final Result!", detail: `<span class="text-emerald-700 font-black text-3xl">${r1}${r2}${r3}</span>` }
+                    ];
+                }
+            },
+            {
+                id: 3,
+                title: "Multiply Numbers Close to Base 100",
+                sutra: "Anurupyena Base Method",
+                desc: "Cross-subtract deficits and multiply surplus/deficits!",
+                defaultVal: "96",
+                icon: "fa-star",
+                calc: (val) => {
+                    let n1 = parseInt(val) || 96;
+                    let n2 = 94;
+                    const d1 = 100 - n1;
+                    const d2 = 100 - n2;
+                    const left = n1 - d2;
+                    const right = d1 * d2;
+                    const rightStr = right.toString().padStart(2, '0');
+                    const finalAns = n1 * n2;
+
+                    return [
+                        { step: "Step 1: Deficits from 100", detail: `${n1} (-${d1}) | ${n2} (-${d2})` },
+                        { step: "Step 2: Cross Subtract Deficits", detail: `${n1} - ${d2} = <span class="text-purple-600 font-black text-2xl">${left}</span>` },
+                        { step: "Step 3: Multiply Deficits Together", detail: `${d1} × ${d2} = <span class="text-amber-600 font-black text-2xl">${rightStr}</span>` },
+                        { step: "Final Result!", detail: `<span class="text-purple-700 font-black text-3xl">${left}${rightStr}</span> (${n1} × ${n2} = ${finalAns})` }
+                    ];
+                }
+            }
+        ];
+
+        /* ================= QUIZ QUESTIONS DATASET ================= */
+        const quizQuestions = [
+            { q: "What is 35 × 11?", hint: "Split 3 and 5, put (3+5=8) in middle!", opts: ["385", "358", "388", "835"], correct: 0 },
+            { q: "What is 45 × 45?", hint: "4 × 5 = 20, attach 25!", opts: ["2025", "1625", "2055", "2525"], correct: 0 },
+            { q: "What is 1000 - 245?", hint: "All from 9, last from 10!", opts: ["755", "855", "745", "655"], correct: 0 },
+            { q: "What is 75 × 75?", hint: "7 × 8 = 56, attach 25!", opts: ["5625", "4925", "5655", "6425"], correct: 0 },
+            { q: "What is 82 × 11?", hint: "8 _ 2 with (8+2=10 carry 1)", opts: ["902", "802", "812", "920"], correct: 0 }
+        ];
+
+        /* ================= UI RENDER FUNCTIONS ================= */
+        window.switchTab = function(tabName) {
+            window.appState.activeTab = tabName;
+            ['tricks', 'quiz', 'leaderboard', 'notes'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const nav = document.getElementById(`nav-${t}`);
+                if (t === tabName) {
+                    el.classList.remove('hidden');
+                    nav.className = 'px-3 md:px-4 py-2 rounded-2xl font-bold text-xs md:text-sm flex items-center gap-1.5 bg-amber-400 text-slate-900 shadow-md btn-bounce';
+                } else {
+                    el.classList.add('hidden');
+                    nav.className = 'px-3 md:px-4 py-2 rounded-2xl font-bold text-xs md:text-sm flex items-center gap-1.5 bg-white text-slate-700 hover:bg-amber-100 btn-bounce';
+                }
+            });
+
+            if (tabName === 'quiz') resetQuiz();
+        };
+
+        function renderTricksGrid() {
+            const grid = document.getElementById('tricks-selector-grid');
+            grid.innerHTML = tricksDatabase.map((t) => {
+                const isSelected = window.appState.selectedTrickId === t.id;
+                return `
+                    <div onclick="selectTrick(${t.id})" class="cursor-pointer bg-white rounded-2xl p-4 border-4 ${isSelected ? 'border-amber-400 shadow-xl scale-105' : 'border-slate-100 shadow-sm hover:border-amber-200'} transition-all btn-bounce">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 text-base">
+                                <i class="fa-solid ${t.icon}"></i>
+                            </span>
+                            <span class="text-[10px] font-black text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full uppercase">Trick #${t.id + 1}</span>
+                        </div>
+                        <h4 class="font-black text-slate-800 text-sm mb-1">${t.title}</h4>
+                        <p class="text-xs text-slate-500 font-medium line-clamp-2">${t.desc}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.selectTrick = function(id) {
+            window.appState.selectedTrickId = id;
+            renderTricksGrid();
+            updateSolverView();
+        };
+
+        function updateSolverView() {
+            const trick = tricksDatabase[window.appState.selectedTrickId];
+            document.getElementById('active-sutra-name').innerText = `Sutra: ${trick.sutra}`;
+            document.getElementById('active-trick-title').innerText = trick.title;
+            document.getElementById('active-trick-desc').innerText = trick.desc;
+            document.getElementById('custom-math-input').value = trick.defaultVal;
+
+            calculateCustomInput();
+        }
+
+        window.calculateCustomInput = function() {
+            const trick = tricksDatabase[window.appState.selectedTrickId];
+            const val = document.getElementById('custom-math-input').value;
+            const steps = trick.calc(val);
+
+            const stepsBox = document.getElementById('visualizer-steps-box');
+            stepsBox.innerHTML = steps.map((s, idx) => `
+                <div class="bg-white p-3.5 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-2 animate-pop" style="animation-delay: ${idx * 0.08}s">
+                    <span class="font-extrabold text-xs text-amber-800 bg-amber-100 px-2.5 py-1 rounded-lg uppercase self-start md:self-auto">${s.step}</span>
+                    <div class="text-sm md:text-base font-bold text-slate-700">${s.detail}</div>
+                </div>
+            `).join('');
+        };
+
+        /* ================= FIRESTORE WRITE OPERATIONS ================= */
+        window.saveCurrentTrickAsNote = async function() {
+            const user = window.appState.currentUser;
+            if (!user) return;
+
+            const trick = tricksDatabase[window.appState.selectedTrickId];
+            const currentVal = document.getElementById('custom-math-input').value;
+
+            try {
+                // RULE 1: /artifacts/{appId}/users/{userId}/notes
+                const notesCol = collection(db, 'artifacts', appId, 'users', user.uid, 'notes');
+                await addDoc(notesCol, {
+                    title: trick.title,
+                    sutra: trick.sutra,
+                    example: `Solved with input: ${currentVal}`,
+                    createdAt: new Date().toISOString()
+                });
+
+                alert("✨ Note saved successfully to your Cloud Firestore database!");
+            } catch (err) {
+                console.error("Error saving note:", err);
+            }
+        };
+
+        window.openCustomNoteModal = function() {
+            document.getElementById('note-modal').classList.remove('hidden');
+        };
+
+        window.closeCustomNoteModal = function() {
+            document.getElementById('note-modal').classList.add('hidden');
+        };
+
+        window.submitCustomNote = async function() {
+            const user = window.appState.currentUser;
+            if (!user) return;
+
+            const title = document.getElementById('modal-note-title').value;
+            const body = document.getElementById('modal-note-body').value;
+
+            if (!title) return;
+
+            try {
+                const notesCol = collection(db, 'artifacts', appId, 'users', user.uid, 'notes');
+                await addDoc(notesCol, {
+                    title: title,
+                    sutra: "Custom Technique",
+                    example: body,
+                    createdAt: new Date().toISOString()
+                });
+
+                closeCustomNoteModal();
+                document.getElementById('modal-note-title').value = '';
+                document.getElementById('modal-note-body').value = '';
+            } catch (err) {
+                console.error("Custom note error:", err);
+            }
+        };
+
+        window.deleteNote = async function(noteId) {
+            const user = window.appState.currentUser;
+            if (!user) return;
+
+            try {
+                const noteRef = doc(db, 'artifacts', appId, 'users', user.uid, 'notes', noteId);
+                await deleteDoc(noteRef);
+            } catch (err) {
+                console.error("Delete note error:", err);
+            }
+        };
+
+        function renderSavedNotes() {
+            const container = document.getElementById('notes-grid');
+            const notes = window.appState.savedNotes;
+
+            if (notes.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-8 text-slate-400">
+                        <i class="fa-solid fa-note-sticky text-4xl mb-2"></i>
+                        <p class="font-bold text-sm">No notes saved yet. Click "Save Note to Database" from any trick!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = notes.map((n) => `
+                <div class="bg-emerald-50 rounded-2xl p-4 border-2 border-emerald-200 flex flex-col justify-between space-y-3 relative shadow-sm">
+                    <button onclick="deleteNote('${n.id}')" class="absolute top-3 right-3 text-slate-400 hover:text-rose-600 font-bold text-sm">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <div>
+                        <span class="bg-emerald-200 text-emerald-900 font-black text-[10px] px-2.5 py-0.5 rounded-full uppercase">${n.sutra || 'Vedic Note'}</span>
+                        <h4 class="font-black text-slate-800 text-base mt-1">${n.title}</h4>
+                        <p class="text-xs text-slate-600 font-medium mt-2">${n.example || ''}</p>
+                    </div>
+                    <div class="text-[10px] text-slate-400 font-extrabold pt-2 border-t border-emerald-200">
+                        Saved in Firestore
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ================= QUIZ & LEADERBOARD LOGIC ================= */
+        window.toggleQuizTimer = function() {
+            window.appState.timerEnabled = !window.appState.timerEnabled;
+            const btn = document.getElementById('timer-toggle-btn');
+            const counter = document.getElementById('quiz-timer-counter');
+
+            if (window.appState.timerEnabled) {
+                btn.className = 'bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full btn-bounce';
+                btn.innerText = 'ON ⚡ (15s Speed)';
+                counter.classList.remove('hidden');
+            } else {
+                btn.className = 'bg-purple-200 text-purple-800 text-xs font-bold px-3 py-1 rounded-full btn-bounce';
+                btn.innerText = 'OFF ☕ (Relaxed)';
+                counter.classList.add('hidden');
+            }
+            resetQuiz();
+        };
+
+        window.resetQuiz = function() {
+            window.appState.quizIndex = 0;
+            window.appState.quizScore = 0;
+            clearInterval(window.appState.timerInterval);
+
+            document.getElementById('quiz-main-view').classList.remove('hidden');
+            document.getElementById('quiz-results-view').classList.add('hidden');
+
+            renderQuizQuestion();
+        };
+
+        function renderQuizQuestion() {
+            clearInterval(window.appState.timerInterval);
+            const q = quizQuestions[window.appState.quizIndex];
+
+            document.getElementById('quiz-q-num').innerText = window.appState.quizIndex + 1;
+            document.getElementById('quiz-score-val').innerText = window.appState.quizScore;
+            document.getElementById('quiz-hint-tag').innerText = q.hint;
+            document.getElementById('quiz-q-text').innerText = q.q;
+
+            const pct = ((window.appState.quizIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-fill').style.width = `${pct}%`;
+
+            document.getElementById('quiz-feedback-box').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            const grid = document.getElementById('quiz-answers-grid');
+            grid.innerHTML = q.opts.map((opt, idx) => `
+                <button onclick="checkAnswer(${idx})" class="quiz-ans-btn bg-white hover:bg-purple-100 text-slate-800 border-2 border-purple-200 font-black text-lg py-3.5 px-4 rounded-2xl shadow-sm btn-bounce">
+                    ${opt}
+                </button>
+            `).join('');
+
+            if (window.appState.timerEnabled) {
+                window.appState.timeLeft = 15;
+                document.getElementById('quiz-timer-counter').innerText = `⏱️ ${window.appState.timeLeft}s`;
+                window.appState.timerInterval = setInterval(() => {
+                    window.appState.timeLeft--;
+                    document.getElementById('quiz-timer-counter').innerText = `⏱️ ${window.appState.timeLeft}s`;
+                    if (window.appState.timeLeft <= 0) {
+                        clearInterval(window.appState.timerInterval);
+                        checkAnswer(-1);
+                    }
+                }, 1000);
+            }
+        }
+
+        window.checkAnswer = function(selectedIdx) {
+            clearInterval(window.appState.timerInterval);
+            const q = quizQuestions[window.appState.quizIndex];
+            const btns = document.querySelectorAll('.quiz-ans-btn');
+            const feedback = document.getElementById('quiz-feedback-box');
+
+            btns.forEach(b => b.setAttribute('disabled', 'true'));
+
+            if (selectedIdx === q.correct) {
+                window.appState.quizScore += 10;
+                feedback.classList.remove('hidden');
+                feedback.className = 'p-3.5 rounded-2xl font-extrabold text-sm bg-emerald-100 text-emerald-800 border-2 border-emerald-300 animate-pop';
+                feedback.innerHTML = '🎉 Excellent Job! That is Correct! (+10 Stars)';
+                confetti({ particleCount: 40, spread: 50, origin: { y: 0.7 } });
+            } else {
+                feedback.classList.remove('hidden');
+                feedback.className = 'p-3.5 rounded-2xl font-extrabold text-sm bg-rose-100 text-rose-800 border-2 border-rose-300 animate-pop';
+                feedback.innerHTML = `Incorrect! The correct answer was <b>${q.opts[q.correct]}</b>.`;
+            }
+
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        };
+
+        window.nextQuizQuestion = function() {
+            window.appState.quizIndex++;
+            if (window.appState.quizIndex < quizQuestions.length) {
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        };
+
+        async function finishQuiz() {
+            document.getElementById('quiz-main-view').classList.add('hidden');
+            document.getElementById('quiz-results-view').classList.remove('hidden');
+
+            const earnedStars = window.appState.quizScore;
+            const accuracy = Math.round((window.appState.quizScore / (quizQuestions.length * 10)) * 100);
+
+            document.getElementById('res-stars-val').innerText = `+${earnedStars} ⭐`;
+            document.getElementById('res-accuracy-val').innerText = `${accuracy}%`;
+
+            // Persist stars and update profile in Firestore
+            const user = window.appState.currentUser;
+            if (user) {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'user_data');
+                const newStars = (window.appState.userProfile.stars || 0) + earnedStars;
+                const newHigh = Math.max(window.appState.userProfile.highScore || 0, window.appState.quizScore);
+
+                await updateDoc(userDocRef, {
+                    stars: newStars,
+                    highScore: newHigh
+                });
+
+                // Also update public leaderboard doc
+                const lbDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'leaderboard', user.uid);
+                await setDoc(lbDocRef, {
+                    displayName: user.displayName || (user.isAnonymous ? `Guest (${user.uid.substring(0,4)})` : "Wizard"),
+                    stars: newStars,
+                    highScore: newHigh,
+                    uid: user.uid
+                }, { merge: true });
+            }
+
+            confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 } });
+        }
+
+        function renderLeaderboard() {
+            const tbody = document.getElementById('leaderboard-tbody');
+            const data = window.appState.leaderboardData;
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-slate-400">No leaderboard entries yet. Be the first to play!</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = data.map((item, idx) => `
+                <tr class="hover:bg-amber-50">
+                    <td class="p-3 font-black text-amber-700">#${idx + 1}</td>
+                    <td class="p-3 font-extrabold text-slate-800">${item.displayName || 'Anonymous Wizard'}</td>
+                    <td class="p-3 text-amber-600 font-black">${item.stars || 0} ⭐</td>
+                    <td class="p-3 text-purple-600 font-black">${item.highScore || 0} pts</td>
+                </tr>
+            `).join('');
+        }
+
+        /* ================= INITIALIZATION ================= */
+        window.addEventListener('DOMContentLoaded', async () => {
+            renderTricksGrid();
+            updateSolverView();
+            await initAuth();
+        });
+    </script>
+</body>
+</html>
